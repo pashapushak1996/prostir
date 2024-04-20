@@ -1,10 +1,7 @@
-import axios, {AxiosInstance} from 'axios';
-import config, {NativeConfig} from 'react-native-config';
-import Config from 'react-native-config';
-
 import {AuthData} from '@app/types/auth.ts';
 import {secureStorageService} from '@app/services/secureStorageService.ts';
 import {appLogger} from '@app/lib/logger.ts';
+import {AppHttpService} from '@app/services/appHttpService.ts';
 
 export type AuthResponse = {
   access_token: string;
@@ -21,18 +18,12 @@ export type AuthRequest = {
 };
 
 export class AuthManager {
-  private readonly axios: AxiosInstance;
+  private readonly _http: AppHttpService;
   public authData: AuthData | null;
-  private config: NativeConfig;
 
-  constructor() {
-    this.axios = axios.create({
-      baseURL: config.HOST_URL,
-      withCredentials: true,
-    });
-
+  constructor(http: AppHttpService) {
+    this._http = http;
     this.authData = null;
-    this.config = Config;
 
     this.authUpdated = () => {
       throw new Error('"authUpdated" callback not initialized. Please initialize.');
@@ -59,7 +50,7 @@ export class AuthManager {
 
   async apiAuthenticate(body: AuthRequest) {
     try {
-      const credentials = await this.axios.post<AuthResponse>(`${this.config.HOST_URL}/login`, body);
+      const credentials = await this._http.post<AuthResponse, AuthRequest>('/login', body);
 
       if (credentials.data) {
         const {data, access_token} = credentials.data;
@@ -87,5 +78,3 @@ export class AuthManager {
     await secureStorageService.setAuthData(authData);
   }
 }
-
-export const authManager = new AuthManager();

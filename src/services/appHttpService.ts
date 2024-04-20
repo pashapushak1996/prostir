@@ -1,6 +1,6 @@
-import axios, {AxiosInstance, AxiosResponse} from 'axios';
+import axios, {AxiosHeaders, AxiosInstance, AxiosResponse} from 'axios';
 import Config, {NativeConfig} from 'react-native-config';
-import {authManager} from '@app/services/authManager.ts';
+import {secureStorageService} from '@app/services/secureStorageService.ts';
 
 export enum EHttpMethod {
   GET = 'GET',
@@ -34,21 +34,31 @@ export class AppHttpService {
     return this.apiRequest(EHttpMethod.DELETE, url, undefined);
   }
 
-  private apiRequest<TResponse, TRequest>(
+  private async apiRequest<TResponse, TRequest>(
     method: EHttpMethod,
     url: string,
     body: TRequest,
   ): Promise<AxiosResponse<TResponse>> {
-    const authToken = authManager.authData?.access_token;
+    const headers = await this.prepareHeaders();
 
     return this.axios.request<TResponse, AxiosResponse<TResponse>, TRequest>({
       method,
-      url: `${this.config.HOST_URL}/${url}`,
+      url: `${this.config.HOST_URL}${url}`,
       data: body,
       responseType: 'json',
-      headers: {
-        Authorization: `Bearer ${authToken}`,
-      },
+      headers,
     });
+  }
+
+  private async prepareHeaders() {
+    const headers = new AxiosHeaders();
+
+    const authData = await secureStorageService.getAuthData();
+
+    if (authData) {
+      headers.set('Authorization', `Bearer ${authData.access_token}`);
+    }
+
+    return headers;
   }
 }
