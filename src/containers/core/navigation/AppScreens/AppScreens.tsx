@@ -1,7 +1,7 @@
 import React, {useMemo, useState} from 'react';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 
-import {RootStackParamsList} from '@app/types/navigation/navigation.types.ts';
+import {RootStackParamsList} from '@app/types/navigation.ts';
 import SCREENS from '../../../../constants/screens.ts';
 import AuthScreens from '@app/containers/core/navigation/AuthScreens/AuthScreens.tsx';
 import BottomTabBarScreens from '@app/containers/core/navigation/BottomTabBarScreens/BottomTabBarScreens.tsx';

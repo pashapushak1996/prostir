@@ -1,7 +1,7 @@
 import React from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 
-import {RootStackParamsList} from '@app/types/navigation/navigation.types.ts';
+import {RootStackParamsList} from '@app/types/navigation.ts';
 import ProfileScreen from '@app/containers/profile-screen/ProfileScreen';
 import SCREENS from '@app/constants/screens.ts';
 

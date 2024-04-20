@@ -1,6 +1,6 @@
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 
-import SCREENS from '../../constants/screens.ts';
+import SCREENS from '../constants/screens.ts';
 
 export type RootStackParamsList = {
   [SCREENS.AUTH_STACK]: undefined;
