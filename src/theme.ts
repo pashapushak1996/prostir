@@ -22,8 +22,11 @@ const theme = createTheme({
     transparent: 'transparent',
   },
   spacing: {
+    xs: 4,
+    s: 8,
     ml: 16,
-    l: 20,
+    l: 24,
+    xxl: 48,
   },
   borderRadii: {
     '0': 0,
@@ -40,7 +43,27 @@ const theme = createTheme({
   },
   textVariants: {
     defaults: {},
+    pageHeader: {
+      color: 'primary',
+      fontWeight: '700',
+      fontSize: 48,
+    },
     buttonLabel: {fontSize: 16, color: 'textSecondary', fontWeight: '700'},
+  },
+  textInputVariants: {
+    defaults: {
+      borderRadius: 'l',
+      backgroundColor: 'mainBackground',
+      padding: 'm',
+      color: 'text',
+    },
+    onAccent: {
+      backgroundColor: 'shadow',
+      color: 'textSecondary',
+      fontSize: 16,
+      padding: 'm',
+      borderRadius: 'xl',
+    },
   },
 });
 

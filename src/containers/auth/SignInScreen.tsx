@@ -8,9 +8,18 @@ import AppButton from '@app/components/AppButton';
 
 const SignInScreen = () => {
   return (
-    <Box backgroundColor={'mainBackground'} flex={1}>
+    <Box
+      backgroundColor={'mainBackground'}
+      flex={1}
+      paddingTop={'xxl'}
+      paddingHorizontal={'l'}>
       <SafeAreaView style={styles.flex}>
-        <AppText>Sign in screen</AppText>
+        <AppText
+          variant={'pageHeader'}
+          textAlign={'center'}
+          marginBottom={'xxl'}>
+          Sign in
+        </AppText>
         <AppButton onPress={() => {}} title={'Sign in'} />
       </SafeAreaView>
     </Box>
