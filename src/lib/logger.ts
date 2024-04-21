@@ -1,4 +1,8 @@
-import {configLoggerType, mapConsoleTransport, logger as rnLogger} from 'react-native-logs';
+import {
+  configLoggerType,
+  mapConsoleTransport,
+  logger as rnLogger,
+} from 'react-native-logs';
 import config, {NativeConfig} from 'react-native-config';
 
 export class Logger {

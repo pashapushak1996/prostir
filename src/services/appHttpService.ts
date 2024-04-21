@@ -22,11 +22,17 @@ export class AppHttpService {
     return this.apiRequest(EHttpMethod.GET, url, undefined);
   }
 
-  post<TResponse, TRequest>(url: string, body: TRequest): Promise<AxiosResponse<TResponse>> {
+  post<TResponse, TRequest>(
+    url: string,
+    body: TRequest,
+  ): Promise<AxiosResponse<TResponse>> {
     return this.apiRequest(EHttpMethod.POST, url, body);
   }
 
-  put<TResponse, TRequest>(url: string, body: TRequest): Promise<AxiosResponse<TResponse>> {
+  put<TResponse, TRequest>(
+    url: string,
+    body: TRequest,
+  ): Promise<AxiosResponse<TResponse>> {
     return this.apiRequest(EHttpMethod.PUT, url, body);
   }
 

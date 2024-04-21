@@ -1,4 +1,4 @@
-import React, {useMemo} from 'react';
+import React, {useMemo, useState} from 'react';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {StyleSheet} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
@@ -10,9 +10,39 @@ import AppTextInput from '@app/components/AppTextInput.tsx';
 import {AppleIcon, FacebookIcon, GoogleIcon} from '@assets/icons';
 import {NavigationProps} from '@app/types/navigation.ts';
 import SCREENS from '@app/constants/screens.ts';
+import {authManager} from '@app/services/authManager.ts';
+
+// TODO Add error handler (Confirm password)
 
 const SignUpScreen = () => {
   const navigation = useNavigation<NavigationProps>();
+  const [isLoading, setIsLoading] = useState(false);
+  const [authData, setAuthData] = useState({
+    email: '',
+    password: '',
+    confirmPassword: '',
+  });
+
+  const handleChangeTextInput = (type: string) => (text: string) => {
+    setAuthData(prevData => ({...prevData, [type]: text}));
+  };
+
+  const handleClickSignUp = async () => {
+    setIsLoading(true);
+
+    const isFulfilledData = Object.keys(authData).every(
+      authKey => authData[authKey as never],
+    );
+
+    if (isFulfilledData) {
+      await authManager.signUp({
+        email: authData.email,
+        password: authData.password,
+      });
+    }
+
+    setIsLoading(false);
+  };
 
   const handleClickSignIn = () => {
     navigation.navigate(SCREENS.SIGN_IN);
@@ -41,22 +71,41 @@ const SignUpScreen = () => {
             Email
           </AppText>
           <Box>
-            <AppTextInput placeholder={'Email'} />
+            <AppTextInput
+              value={authData.email}
+              onChangeText={handleChangeTextInput('email')}
+              placeholder={'Email'}
+            />
           </Box>
         </Box>
         <Box marginBottom={'xl'}>
           <AppText variant={'inputLabel'} marginBottom={'xs'}>
             Password
           </AppText>
-          <AppTextInput placeholder={'Password'} marginBottom={'xs'} />
+          <AppTextInput
+            value={authData.password}
+            onChangeText={handleChangeTextInput('password')}
+            placeholder={'Password'}
+            marginBottom={'xs'}
+          />
         </Box>
         <Box marginBottom={'xl'}>
           <AppText variant={'inputLabel'} marginBottom={'xs'}>
             Confirm password
           </AppText>
-          <AppTextInput placeholder={'Confirm password'} marginBottom={'xs'} />
+          <AppTextInput
+            value={authData.confirmPassword}
+            onChangeText={handleChangeTextInput('confirmPassword')}
+            placeholder={'Confirm password'}
+            marginBottom={'xs'}
+          />
         </Box>
-        <AppButton onPress={() => {}} title={'Sign in'} marginBottom={'xxl'} />
+        <AppButton
+          isLoading={isLoading}
+          onPress={handleClickSignUp}
+          title={'Sign up'}
+          marginBottom={'xxl'}
+        />
         <Box
           flexDirection={'row'}
           alignItems={'center'}
@@ -97,7 +146,7 @@ const SignUpScreen = () => {
             variant={'mainLabelSmaller'}
             color={'primary'}
             textDecorationLine={'underline'}>
-            Sign Up
+            Sign In
           </AppText>
         </Box>
       </SafeAreaView>

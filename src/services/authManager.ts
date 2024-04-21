@@ -1,12 +1,14 @@
+import axios, {AxiosInstance, AxiosResponse} from 'axios';
+import Config from 'react-native-config';
+
 import {AuthData} from '@app/types/auth.ts';
 import {secureStorageService} from '@app/services/secureStorageService.ts';
-import {appLogger} from '@app/lib/logger.ts';
-import {AppHttpService} from '@app/services/appHttpService.ts';
+import {Logger} from '@app/lib/logger.ts';
 
 export type AuthResponse = {
   access_token: string;
   data: {
-    userId: string;
+    id: string;
     email: string;
     role: string;
   };
@@ -18,15 +20,22 @@ export type AuthRequest = {
 };
 
 export class AuthManager {
-  private readonly _http: AppHttpService;
+  private readonly _http: AxiosInstance;
   public authData: AuthData | null;
+  private readonly logger: Logger;
 
-  constructor(http: AppHttpService) {
-    this._http = http;
+  constructor() {
+    this._http = axios.create({
+      baseURL: Config.HOST_URL,
+      withCredentials: true,
+    });
     this.authData = null;
+    this.logger = new Logger();
 
     this.authUpdated = () => {
-      throw new Error('"authUpdated" callback not initialized. Please initialize.');
+      throw new Error(
+        '"authUpdated" callback not initialized. Please initialize.',
+      );
     };
   }
 
@@ -48,23 +57,51 @@ export class AuthManager {
     this.authUpdated();
   }
 
-  async apiAuthenticate(body: AuthRequest) {
+  async signIn(body: AuthRequest) {
     try {
-      const credentials = await this._http.post<AuthResponse, AuthRequest>('/login', body);
+      const credentials = await this._http.post<
+        AuthResponse,
+        AxiosResponse<AuthResponse>,
+        AuthRequest
+      >('/auth/login', body);
 
       if (credentials.data) {
         const {data, access_token} = credentials.data;
 
         const authData: AuthData = {
           access_token,
-          userId: data.userId,
+          userId: data.id,
           email: data.email,
         };
 
         await this.storeAuthData(authData);
       }
     } catch (error) {
-      appLogger.error('[ERROR] Api authentication error', error);
+      this.logger.error('[ERROR] Api authentication error', error);
+    }
+  }
+
+  async signUp(body: AuthRequest) {
+    try {
+      const credentials = await this._http.post<
+        AuthResponse,
+        AxiosResponse<AuthResponse>,
+        AuthRequest
+      >('/auth/registration', body);
+
+      if (credentials.data) {
+        const {data, access_token} = credentials.data;
+
+        const authData: AuthData = {
+          access_token,
+          userId: data.id,
+          email: data.email,
+        };
+
+        await this.storeAuthData(authData);
+      }
+    } catch (error) {
+      this.logger.error('[ERROR] Api registration error', error);
     }
   }
 
@@ -78,3 +115,5 @@ export class AuthManager {
     await secureStorageService.setAuthData(authData);
   }
 }
+
+export const authManager = new AuthManager();

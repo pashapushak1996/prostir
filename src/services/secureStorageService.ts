@@ -4,7 +4,7 @@ import {AuthData} from '@app/types/auth.ts';
 import {appLogger} from '@app/lib/logger.ts';
 
 export class SecureStorageService {
-  private keychain: typeof Keychain;
+  private readonly keychain: typeof Keychain;
 
   constructor() {
     this.keychain = Keychain;
@@ -27,11 +27,14 @@ export class SecureStorageService {
   }
 
   async setAuthData(authData: AuthData): Promise<void> {
-    let result: Keychain.Result | false = false;
+    let result: Keychain.Result | false;
     try {
       appLogger.debug('[Storage] Storing auth data.', authData);
       const authState = JSON.stringify(authData);
-      result = await this.keychain.setGenericPassword(authData.userId.toString(), authState);
+      result = await this.keychain.setGenericPassword(
+        authData.userId.toString(),
+        authState,
+      );
     } catch (e) {
       appLogger.error('[Storage] Error occurred when storing auth data.', e);
       result = false;

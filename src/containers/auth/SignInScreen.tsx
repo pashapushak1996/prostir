@@ -1,4 +1,4 @@
-import React, {useMemo} from 'react';
+import React, {useMemo, useState} from 'react';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {StyleSheet, TouchableOpacity} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
@@ -10,9 +10,35 @@ import AppTextInput from '@app/components/AppTextInput.tsx';
 import {AppleIcon, FacebookIcon, GoogleIcon} from '@assets/icons';
 import {NavigationProps} from '@app/types/navigation.ts';
 import SCREENS from '@app/constants/screens.ts';
+import {authManager} from '@app/services/authManager.ts';
+
+// TODO Add error handler
 
 const SignInScreen = () => {
   const navigation = useNavigation<NavigationProps>();
+  const [isLoading, setIsLoading] = useState(false);
+  const [authData, setAuthData] = useState({
+    email: '',
+    password: '',
+  });
+
+  const handleChangeTextInput = (type: string) => (text: string) => {
+    setAuthData(prevData => ({...prevData, [type]: text}));
+  };
+
+  const handleClickSignIn = async () => {
+    setIsLoading(true);
+
+    const isFulfilledData = Object.keys(authData).every(
+      authKey => authData[authKey as never],
+    );
+
+    if (isFulfilledData) {
+      await authManager.signIn(authData);
+    }
+
+    setIsLoading(false);
+  };
 
   const handleClickSignUp = () => {
     navigation.navigate(SCREENS.SIGN_UP);
@@ -41,14 +67,23 @@ const SignInScreen = () => {
             Email
           </AppText>
           <Box>
-            <AppTextInput placeholder={'Email'} />
+            <AppTextInput
+              value={authData.email}
+              onChangeText={handleChangeTextInput('email')}
+              placeholder={'Email'}
+            />
           </Box>
         </Box>
         <Box marginBottom={'xl'}>
           <AppText variant={'inputLabel'} marginBottom={'xs'}>
             Password
           </AppText>
-          <AppTextInput placeholder={'Email'} marginBottom={'xs'} />
+          <AppTextInput
+            value={authData.password}
+            onChangeText={handleChangeTextInput('password')}
+            placeholder={'Password'}
+            marginBottom={'xs'}
+          />
           <Box alignSelf={'flex-end'}>
             <TouchableOpacity
               activeOpacity={0.6}
@@ -61,7 +96,12 @@ const SignInScreen = () => {
             </TouchableOpacity>
           </Box>
         </Box>
-        <AppButton onPress={() => {}} title={'Sign in'} marginBottom={'xxl'} />
+        <AppButton
+          isLoading={isLoading}
+          onPress={handleClickSignIn}
+          title={'Sign in'}
+          marginBottom={'xxl'}
+        />
         <Box
           flexDirection={'row'}
           alignItems={'center'}
