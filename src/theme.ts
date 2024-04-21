@@ -16,6 +16,7 @@ const theme = createTheme({
   colors: {
     primary: palette.green,
     primaryDarker: palette.greenDarker,
+    secondary: palette.grayLighter,
     text: palette.black,
     textSecondary: palette.white,
     mainBackground: palette.white,
@@ -24,8 +25,10 @@ const theme = createTheme({
   spacing: {
     xs: 4,
     s: 8,
+    m: 14,
     ml: 16,
     l: 24,
+    xl: 32,
     xxl: 48,
   },
   borderRadii: {
@@ -35,6 +38,7 @@ const theme = createTheme({
     ml: 16,
     l: 22,
     xl: 32,
+    xxl: 42,
     inf: 1000,
   },
   breakpoints: {
@@ -48,21 +52,19 @@ const theme = createTheme({
       fontWeight: '700',
       fontSize: 48,
     },
+    mainLabel: {fontSize: 18, fontWeight: '500', color: 'text'},
+    mainLabelSmaller: {fontSize: 16, fontWeight: '600', color: 'text'},
+    inputLabel: {fontSize: 16, fontWeight: '600', color: 'text'},
     buttonLabel: {fontSize: 16, color: 'textSecondary', fontWeight: '700'},
   },
   textInputVariants: {
     defaults: {
-      borderRadius: 'l',
+      borderRadius: 'xxl',
       backgroundColor: 'mainBackground',
       padding: 'm',
       color: 'text',
-    },
-    onAccent: {
-      backgroundColor: 'shadow',
-      color: 'textSecondary',
-      fontSize: 16,
-      padding: 'm',
-      borderRadius: 'xl',
+      borderWidth: 1,
+      borderColor: 'secondary',
     },
   },
 });

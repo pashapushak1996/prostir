@@ -50,7 +50,7 @@ const restyleFunctions = composeRestyleFunctions<Theme, RestyleProps>([
   variant as never,
 ]);
 
-const AppTextInput = forwardRef<TextInput & AppTextInputProps>(
+const AppTextInput = forwardRef<TextInput, AppTextInputProps>(
   ({...rest}: AppTextInputProps, ref) => {
     const props = useRestyle(restyleFunctions as never, rest);
 
