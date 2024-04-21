@@ -8,6 +8,7 @@ export type RootStackParamsList = {
 
   [SCREENS.HOME]: undefined;
   [SCREENS.SIGN_IN]: undefined;
+  [SCREENS.SIGN_UP]: undefined;
   [SCREENS.PROFILE_SCREEN]: undefined;
 };
 

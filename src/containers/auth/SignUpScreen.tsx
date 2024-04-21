@@ -1,6 +1,6 @@
 import React, {useMemo} from 'react';
 import {SafeAreaView} from 'react-native-safe-area-context';
-import {StyleSheet, TouchableOpacity} from 'react-native';
+import {StyleSheet} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 
 import Box from '@app/components/Box';
@@ -11,11 +11,11 @@ import {AppleIcon, FacebookIcon, GoogleIcon} from '@assets/icons';
 import {NavigationProps} from '@app/types/navigation.ts';
 import SCREENS from '@app/constants/screens.ts';
 
-const SignInScreen = () => {
+const SignUpScreen = () => {
   const navigation = useNavigation<NavigationProps>();
 
-  const handleClickSignUp = () => {
-    navigation.navigate(SCREENS.SIGN_UP);
+  const handleClickSignIn = () => {
+    navigation.navigate(SCREENS.SIGN_IN);
   };
 
   const icons = useMemo(
@@ -34,7 +34,7 @@ const SignInScreen = () => {
           variant={'pageHeader'}
           textAlign={'center'}
           marginBottom={'xxl'}>
-          Sign in
+          Sign up
         </AppText>
         <Box marginBottom={'xl'}>
           <AppText variant={'inputLabel'} marginBottom={'xs'}>
@@ -48,18 +48,13 @@ const SignInScreen = () => {
           <AppText variant={'inputLabel'} marginBottom={'xs'}>
             Password
           </AppText>
-          <AppTextInput placeholder={'Email'} marginBottom={'xs'} />
-          <Box alignSelf={'flex-end'}>
-            <TouchableOpacity
-              activeOpacity={0.6}
-              onPress={() => {
-                console.log('Navigate to forgot password');
-              }}>
-              <AppText variant={'inputLabel'} color={'primary'}>
-                Forgot password?
-              </AppText>
-            </TouchableOpacity>
-          </Box>
+          <AppTextInput placeholder={'Password'} marginBottom={'xs'} />
+        </Box>
+        <Box marginBottom={'xl'}>
+          <AppText variant={'inputLabel'} marginBottom={'xs'}>
+            Confirm password
+          </AppText>
+          <AppTextInput placeholder={'Confirm password'} marginBottom={'xs'} />
         </Box>
         <AppButton onPress={() => {}} title={'Sign in'} marginBottom={'xxl'} />
         <Box
@@ -95,14 +90,14 @@ const SignInScreen = () => {
         </Box>
         <Box flexDirection={'row'} gap={'xs'} alignSelf={'center'}>
           <AppText variant={'mainLabelSmaller'} fontWeight={'500'}>
-            Doesn't have an account?
+            Have an account?
           </AppText>
           <AppText
-            onPress={handleClickSignUp}
+            onPress={handleClickSignIn}
             variant={'mainLabelSmaller'}
             color={'primary'}
             textDecorationLine={'underline'}>
-            Sign up
+            Sign Up
           </AppText>
         </Box>
       </SafeAreaView>
@@ -114,4 +109,4 @@ const styles = StyleSheet.create({
   flex: {flex: 1},
 });
 
-export default SignInScreen;
+export default SignUpScreen;
