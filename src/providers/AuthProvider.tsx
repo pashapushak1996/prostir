@@ -1,11 +1,11 @@
 import React, {ReactNode, useCallback, useEffect, useState} from 'react';
+import SplashScreen from 'react-native-splash-screen';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
 
 import {authManager} from '@app/services/authManager.ts';
 import SCREENS from '@app/constants/screens.ts';
 import AuthScreens from '@app/containers/core/navigation/AuthScreens/AuthScreens.tsx';
-import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {RootStackParamsList} from '@app/types/navigation.ts';
-import {ActivityIndicator} from 'react-native';
 
 type Props = {
   children: ReactNode;
@@ -21,13 +21,14 @@ const AuthProvider = (props: Props) => {
   }, []);
 
   useEffect(() => {
-    authManager.loadState();
-  }, []);
+    const initAuthState = async () => {
+      await authManager.loadState();
 
-  if (authManager.authStatus === 'idle') {
-    // TODO Add splash screen
-    return <ActivityIndicator />;
-  }
+      SplashScreen.hide();
+    };
+
+    initAuthState();
+  }, []);
 
   if (!authManager.authData) {
     return (
