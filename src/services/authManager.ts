@@ -23,6 +23,7 @@ export class AuthManager {
   private readonly _http: AxiosInstance;
   public authData: AuthData | null;
   private readonly logger: Logger;
+  public authStatus: 'idle' | 'signOut' | 'signIn';
 
   constructor() {
     this._http = axios.create({
@@ -31,6 +32,7 @@ export class AuthManager {
     });
     this.authData = null;
     this.logger = new Logger();
+    this.authStatus = 'idle';
 
     this.authUpdated = () => {
       throw new Error(
@@ -46,14 +48,18 @@ export class AuthManager {
 
     if (authData) {
       await this.storeAuthData(authData);
+      this.authStatus = 'signIn';
     } else {
       await this.signOut();
     }
+
+    this.authUpdated();
   }
 
   async signOut() {
     await secureStorageService.removeAuthData();
     this.authData = null;
+    this.authStatus = 'signOut';
     this.authUpdated();
   }
 
@@ -75,6 +81,10 @@ export class AuthManager {
         };
 
         await this.storeAuthData(authData);
+
+        this.authStatus = 'signIn';
+
+        this.authUpdated();
       }
     } catch (error) {
       this.logger.error('[ERROR] Api authentication error', error);
@@ -99,6 +109,8 @@ export class AuthManager {
         };
 
         await this.storeAuthData(authData);
+
+        this.authStatus = 'signIn';
       }
     } catch (error) {
       this.logger.error('[ERROR] Api registration error', error);

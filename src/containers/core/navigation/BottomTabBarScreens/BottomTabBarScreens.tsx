@@ -9,8 +9,11 @@ const TabBarStack = createBottomTabNavigator<RootStackParamsList>();
 
 const BottomTabBarScreens = () => {
   return (
-    <TabBarStack.Navigator>
-      <TabBarStack.Screen name={SCREENS.PROFILE_SCREEN} component={ProfileScreen} />
+    <TabBarStack.Navigator initialRouteName={SCREENS.PROFILE_SCREEN}>
+      <TabBarStack.Screen
+        name={SCREENS.PROFILE_SCREEN}
+        component={ProfileScreen}
+      />
     </TabBarStack.Navigator>
   );
 };
