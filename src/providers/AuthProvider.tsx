@@ -30,7 +30,7 @@ const AuthProvider = (props: Props) => {
     initAuthState();
   }, []);
 
-  if (!authManager.authData) {
+  if (!authManager.authData || authManager.authStatus === 'idle') {
     return (
       <Stack.Navigator screenOptions={{headerShown: false}}>
         <Stack.Screen name={SCREENS.AUTH_STACK} component={AuthScreens} />
