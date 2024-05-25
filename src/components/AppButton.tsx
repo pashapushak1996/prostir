@@ -14,20 +14,33 @@ type ButtonProps = {
   title?: string;
 } & Partial<BoxProps<Theme>>;
 
-const AppButton: React.FC<React.PropsWithChildren<ButtonProps>> = (props: React.PropsWithChildren<ButtonProps>) => {
+const AppButton: React.FC<React.PropsWithChildren<ButtonProps>> = (
+  props: React.PropsWithChildren<ButtonProps>,
+) => {
   return (
-    <TouchableHighlight underlayColor="transparent" onPress={props.onPress} disabled={props.isEnabled === false}>
+    <TouchableHighlight
+      underlayColor="transparent"
+      onPress={props.onPress}
+      disabled={props.isEnabled === false}>
       <Box
         py="ml"
         px="l"
         alignItems="center"
-        backgroundColor={props.isEnabled === false ? 'primaryDarker' : 'primary'}
+        backgroundColor={
+          props.isEnabled === false ? 'primaryDarker' : 'primary'
+        }
         borderRadius="xl"
         shadowOffset={{height: 2, width: 0}}
         shadowRadius={5}
         shadowOpacity={0.2}
         {...props}>
-        {props.isLoading && <ActivityIndicator color="textSecondary" style={styles.loader} testID="buttonLoading" />}
+        {props.isLoading && (
+          <ActivityIndicator
+            color="white"
+            style={styles.loader}
+            testID="buttonLoading"
+          />
+        )}
         <Box opacity={props.isLoading ? 0 : 100}>
           {props.children ? (
             props.children

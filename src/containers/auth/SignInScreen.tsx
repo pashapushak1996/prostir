@@ -134,13 +134,11 @@ const SignInScreen = () => {
           ))}
         </Box>
         <Box flexDirection={'row'} gap={'xs'} alignSelf={'center'}>
-          <AppText variant={'mainLabelSmaller'} fontWeight={'500'}>
-            Doesn't have an account?
-          </AppText>
+          <AppText fontWeight={'500'}>Doesn't have an account?</AppText>
           <AppText
             onPress={handleClickSignUp}
-            variant={'mainLabelSmaller'}
             color={'primary'}
+            fontWeight={'600'}
             textDecorationLine={'underline'}>
             Sign up
           </AppText>

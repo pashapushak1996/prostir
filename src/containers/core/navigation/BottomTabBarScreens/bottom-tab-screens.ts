@@ -3,7 +3,7 @@ import {
   ChatIcon,
   HeartIcon,
   HomeIcon,
-  ProfileIcon,
+  ProfileRoundedIcon,
   SearchIcon,
 } from '@assets/icons';
 import ProfileScreen from '@app/containers/profile-screen/ProfileScreen.tsx';
@@ -36,7 +36,7 @@ export const bottomTabScreens = [
   {
     name: SCREENS.PROFILE_SCREEN,
     component: ProfileScreen,
-    icon: ProfileIcon,
+    icon: ProfileRoundedIcon,
     label: 'Profile',
   },
 ];

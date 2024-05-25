@@ -31,6 +31,7 @@ const BottomTabBarScreens = () => {
     <TabBarStack.Navigator
       initialRouteName={SCREENS.PROFILE_SCREEN}
       screenOptions={{
+        headerShown: false,
         tabBarActiveTintColor: colors.primary,
         tabBarInactiveTintColor: colors.secondary,
         tabBarLabelStyle: {fontSize: 14, fontFamily: 'OpenSans'},

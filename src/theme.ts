@@ -17,8 +17,10 @@ const theme = createTheme({
     primary: palette.green,
     primaryDarker: palette.greenDarker,
     secondary: palette.grayLighter,
+    secondaryLighter: palette.silverDarker,
     text: palette.black,
     textSecondary: palette.white,
+    textLighter: palette.gray,
     mainBackground: palette.white,
     transparent: 'transparent',
   },
@@ -46,16 +48,16 @@ const theme = createTheme({
     tablet: 768,
   },
   textVariants: {
-    defaults: {fontFamily: 'OpenSans'},
+    defaults: {fontFamily: 'OpenSans', color: 'text', fontSize: 16},
     pageHeader: {
       color: 'primary',
       fontWeight: '700',
       fontSize: 48,
     },
-    mainLabel: {fontSize: 18, fontWeight: '500', color: 'text'},
-    mainLabelSmaller: {fontSize: 16, fontWeight: '600', color: 'text'},
-    inputLabel: {fontSize: 16, fontWeight: '600', color: 'text'},
-    buttonLabel: {fontSize: 16, color: 'textSecondary', fontWeight: '700'},
+    screenHeader: {fontSize: 20, fontWeight: '600'},
+    mainLabel: {fontSize: 18, fontWeight: '500'},
+    inputLabel: {fontWeight: '600'},
+    buttonLabel: {color: 'textSecondary', fontWeight: '700'},
   },
   textInputVariants: {
     defaults: {

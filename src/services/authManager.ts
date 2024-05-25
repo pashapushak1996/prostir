@@ -27,7 +27,7 @@ export class AuthManager {
 
   constructor() {
     this._http = axios.create({
-      baseURL: Config.HOST_URL,
+      baseURL: 'http://192.168.0.101:5500',
       withCredentials: true,
     });
     this.authData = null;
