@@ -10,6 +10,7 @@ const ProfileScreen = () => {
     <Box>
       <AppText>Profile Screen</AppText>
       <AppButton
+        title={'Sign out'}
         onPress={() => {
           authManager.signOut();
         }}

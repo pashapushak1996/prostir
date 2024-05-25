@@ -33,7 +33,7 @@ const BottomTabBarScreens = () => {
       screenOptions={{
         tabBarActiveTintColor: colors.primary,
         tabBarInactiveTintColor: colors.secondary,
-        tabBarLabelStyle: {fontSize: 14},
+        tabBarLabelStyle: {fontSize: 14, fontFamily: 'OpenSans'},
       }}>
       {screens}
     </TabBarStack.Navigator>

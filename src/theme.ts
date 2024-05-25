@@ -46,7 +46,7 @@ const theme = createTheme({
     tablet: 768,
   },
   textVariants: {
-    defaults: {},
+    defaults: {fontFamily: 'OpenSans'},
     pageHeader: {
       color: 'primary',
       fontWeight: '700',
