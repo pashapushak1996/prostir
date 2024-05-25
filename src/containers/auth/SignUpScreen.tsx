@@ -30,15 +30,13 @@ const SignUpScreen = () => {
   const handleClickSignUp = async () => {
     setIsLoading(true);
 
-    const isFulfilledData = Object.keys(authData).every(
-      authKey => authData[authKey as never],
-    );
-
-    if (isFulfilledData) {
+    try {
       await authManager.signUp({
         email: authData.email,
         password: authData.password,
       });
+    } catch (e) {
+      setIsLoading(false);
     }
 
     setIsLoading(false);

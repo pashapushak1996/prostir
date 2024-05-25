@@ -10,6 +10,10 @@ export type RootStackParamsList = {
   [SCREENS.SIGN_IN]: undefined;
   [SCREENS.SIGN_UP]: undefined;
   [SCREENS.PROFILE_SCREEN]: undefined;
+  [SCREENS.SEARCH_SCREEN]: undefined;
+  [SCREENS.CHATS_SCREEN]: undefined;
+  [SCREENS.BOOKINGS_SCREEN]: undefined;
+  [SCREENS.SAVED_SCREEN]: undefined;
 };
 
 export type NavigationProps = NativeStackNavigationProp<RootStackParamsList>;
